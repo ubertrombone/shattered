@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Shattered</string>
+    <string name="username_exists">Username exists</string>
+    <string name="choose_username">Choose a username</string>
+    <string name="username">Username</string>
+    <string name="profanity_filter">Username should not contain profanity</string>
+    <string name="google_sign_in">Google Signin</string>
+    <string name="records">Records</string>
+    <string name="levels">Levels</string>
+    <string name="options">Options</string>
+    <string name="sign_out">SIGN OUT</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="score">Score:</string>
+    <string name="third_star">Third star</string>
+    <string name="second_star">Second star</string>
+    <string name="first_star">First star</string>
+    <string name="level">Level %s</string>
+    <string name="navigate_back">Navigate back</string>
+    <string name="complete_level_1">Complete Level 1</string>
+    <string name="close">Close</string>
+    <string name="play_this_level">play this level</string>
+    <string name="return_to_main_screen">return to main screen</string>
+    <string name="lives">Lives:</string>
+    <string name="open_instructions">Open instructions</string>
+    <string name="guide">Guide</string>
+    <string name="correct_answer">correct answer</string>
+    <string name="left_pointing_game_piece">Left pointing game piece</string>
+    <string name="right_pointing_game_piece">Right pointing game piece</string>
+    <string name="go_back_a_row_or_not">Go back a row… or not</string>
+    <string name="back_to_go_it_s_like_dying">Back to go… It\'s like dying</string>
+    <string name="answer_to_the_right">Answer - right</string>
+    <string name="answer_to_the_left">Answer - left</string>
+    <string name="go_to_next_level">Go to next level</string>
+    <string name="try_again">Try again</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".username.UsernameFragment">
+
+    <data>
+        <variable
+            name="usernameFragment"
+            type="com.example.shattered.username.UsernameFragment"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/username_field_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_field"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/username"
+                android:textColorHint="@android:color/holo_red_dark"
+                android:background="@color/black"
+                app:errorIconDrawable="@drawable/error_icon"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:errorTextColor="@android:color/holo_red_dark"
+                app:boxBackgroundMode="outline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:digits="abcdefghijklmnopqrstuvwxyz0123456789"
+                    android:maxLength="12"
+                    android:singleLine="true"
+                    android:imeOptions="actionDone"
+                    android:textColor="@android:color/holo_red_dark"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="levelsFragment"
+            type="com.example.shattered.levels.LevelsFragment"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        tools:context=".splash.SplashFragment">
+
+        <ImageView
+            android:id="@+id/sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/sign_out"
+            app:srcCompat="@drawable/ic_logout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/central_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" >
+
+            <ImageView
+                    android:id="@+id/image_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/teal_oval"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                    android:id="@+id/level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFF0000"
+                    android:textSize="120sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_menu_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/options"
+            android:src="@drawable/teal_circle_with_plus"
+            android:backgroundTintMode="src_atop"
+            android:backgroundTint="@android:color/holo_red_light"
+            app:fabCustomSize="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/records_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/records"
+            android:visibility="gone"
+            android:src="@drawable/red_circle_with_rho"
+            android:backgroundTintMode="src_atop"
+            android:backgroundTint="@android:color/holo_red_light"
+            app:fabCustomSize="56dp"
+            app:layout_constraintBottom_toTopOf="@id/fab_menu_actions"
+            app:layout_constraintStart_toStartOf= "@id/fab_menu_actions" />
+
+        <TextView
+            android:id="@+id/records_fab_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/records"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/records_fab"
+            app:layout_constraintStart_toEndOf="@id/records_fab"
+            app:layout_constraintTop_toTopOf="@id/records_fab" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/levels_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/levels"
+            android:visibility="gone"
+            android:src="@drawable/red_circle_with_lambda"
+            android:backgroundTintMode="src_atop"
+            android:backgroundTint="@android:color/holo_red_light"
+            app:fabCustomSize="56dp"
+            app:layout_constraintBottom_toTopOf="@id/records_fab"
+            app:layout_constraintStart_toStartOf="@id/records_fab"
+            app:layout_constraintEnd_toEndOf="@id/records_fab" />
+
+        <TextView
+            android:id="@+id/levels_fab_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/levels"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/levels_fab"
+            app:layout_constraintStart_toEndOf="@id/levels_fab"
+            app:layout_constraintTop_toTopOf="@id/levels_fab" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

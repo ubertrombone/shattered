@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+
+            <gradient
+                    android:angle="270"
+                    android:centerColor="#8803DAC5"
+                    android:centerX="50%p"
+                    android:centerY="50%p"
+                    android:endColor="#33FF0000"
+                    android:gradientRadius="50%p"
+                    android:startColor="#FFFF0000"
+                    android:type="radial" />
+
+            <size
+                    android:width="40dp"
+                    android:height="40dp" />
+
+        </shape>
+    </item>
+    <item android:drawable="@drawable/home_icon" />
+</layer-list>
