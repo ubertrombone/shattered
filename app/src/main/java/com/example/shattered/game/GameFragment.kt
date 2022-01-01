@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -73,20 +74,15 @@ class GameFragment : Fragment() {
                     .show(childFragmentManager, FinalMessageFragment.TAG)
             } }
         }
-
         val balloon = createBalloon(requireContext()) {
-            setWidthRatio(1.0f)
-            setHeight(BalloonSizeSpec.WRAP)
-            setText("Edit your profile here!")
-            setTextColorResource(R.color.white)
-            setTextSize(15f)
-            setIconDrawableResource(R.drawable.home_icon)
+            setLayout(R.layout.correct_answer_tutorial)
+            setArrowOrientation(ArrowOrientation.TOP)
             setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
             setArrowSize(10)
             setArrowPosition(0.5f)
-            setPadding(12)
-            setCornerRadius(8f)
-            setBackgroundColorResource(R.color.royal_blue)
+            setWidthRatio(0.45f)
+            setCornerRadius(16f)
+            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
             setBalloonAnimation(BalloonAnimation.ELASTIC)
             setLifecycleOwner(viewLifecycleOwner)
             setOnBalloonClickListener { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
@@ -110,11 +106,6 @@ class GameFragment : Fragment() {
         observeScore()
         observeLives()
         observeStars()
-        (activity as MainActivity).fullScreen()
-    }
-
-    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
-        super.onMultiWindowModeChanged(isInMultiWindowMode)
         (activity as MainActivity).fullScreen()
     }
 
