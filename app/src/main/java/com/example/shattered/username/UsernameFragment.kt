@@ -1,9 +1,7 @@
 package com.example.shattered.username
 
 import android.content.Context
-import android.os.Build.*
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.DialogFragment
@@ -35,10 +33,9 @@ class UsernameFragment : DialogFragment() {
         @Suppress("DEPRECATION")
         dialog?.window?.decorView?.systemUiVisibility = requireActivity().window.decorView.systemUiVisibility
 
-        dialog?.setOnShowListener { //Clear the not focusable flag from the window
+        dialog?.setOnShowListener {
             dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
 
-            //Update the WindowManager with the new attributes (no nicer way I know of to do this)..
             val wm = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
             wm.updateViewLayout(dialog?.window?.decorView, dialog?.window?.attributes)
         }
@@ -65,12 +62,8 @@ class UsernameFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val displayMetrics = DisplayMetrics()
-        if (VERSION.SDK_INT >= VERSION_CODES.R) activity?.display?.getRealMetrics(displayMetrics)
-        else @Suppress("DEPRECATION") activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-
         dialog?.window?.setLayout(
-            displayMetrics.widthPixels - (displayMetrics.widthPixels * .2).toInt(),
+            sharedViewModel.displayWidth - (sharedViewModel.displayWidth * .2).toInt(),
             WindowManager.LayoutParams.WRAP_CONTENT
         )
     }

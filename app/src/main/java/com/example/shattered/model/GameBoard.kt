@@ -52,7 +52,7 @@ open class GameBoard {
     // fun addLives(amount: Int) { _lives.value = _lives.value?.plus(amount) }
     fun removeLives(amount: Int) { _lives.value = _lives.value?.minus(amount) }
 
-    private fun setTimer(level: Int) { _timer = if (level <= 5) 0 else 100000 }
+    private fun setTimer(level: Int) { _timer = if (level <= 5) 0 else 60000 }
 
     private fun createBoard(level: Int): Array<Array<String>> {
         val list = mutableListOf<String>()

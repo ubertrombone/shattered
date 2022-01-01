@@ -3,9 +3,7 @@ package com.example.shattered.finalmessage
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -25,11 +23,13 @@ class FinalMessageFragment : DialogFragment() {
         const val TAG = "FinalMessageFragment"
         private const val KEY_TITLE = "KEY_TITLE"
         private const val KEY_SCORE = "KEY_SCORE"
+        private const val KEY_TIME_OUT = "KEY_TIME_OUT"
 
-        fun newInstance(title: String, score: Long): FinalMessageFragment {
+        fun newInstance(title: String, score: Long, timeOut: Boolean): FinalMessageFragment {
             val args = Bundle()
             args.putString(KEY_TITLE, title)
             args.putLong(KEY_SCORE, score)
+            args.putBoolean(KEY_TIME_OUT, timeOut)
             val fragment = FinalMessageFragment()
             fragment.arguments = args
             return fragment
@@ -76,13 +76,10 @@ class FinalMessageFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val displayMetrics = DisplayMetrics()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) activity?.display?.getRealMetrics(displayMetrics)
-        else @Suppress("DEPRECATION") activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
 
         dialog?.window?.setLayout(
-            displayMetrics.widthPixels - (displayMetrics.widthPixels * .2).toInt(),
-            displayMetrics.heightPixels - (displayMetrics.heightPixels * .35).toInt()
+            sharedViewModel.displayWidth - (sharedViewModel.displayWidth * .2).toInt(),
+            sharedViewModel.displayHeight - (sharedViewModel.displayHeight * .35).toInt()
         )
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -125,12 +122,14 @@ class FinalMessageFragment : DialogFragment() {
             sharedViewModel.setLevel(arguments?.getString(KEY_TITLE)!!.toInt() + 1)
             (parentFragment as GameFragment).gameSetup()
             (parentFragment as GameFragment).onResume()
+            (parentFragment as GameFragment).hideBackButton(false)
             dismiss()
         }
 
         binding?.tryAgain?.setOnClickListener {
             (parentFragment as GameFragment).gameSetup()
             (parentFragment as GameFragment).onResume()
+            (parentFragment as GameFragment).hideBackButton(false)
             dismiss()
         }
 
@@ -144,10 +143,15 @@ class FinalMessageFragment : DialogFragment() {
         val finalData = sharedViewModel.finalCurrentLevelData.value
         val levelReference = arguments?.getString(KEY_TITLE)!!
         val keyScore = arguments?.getLong(KEY_SCORE)!!.toInt()
-        val score = if (keyScore > (finalData?.score ?: 0)) keyScore else finalData?.score ?: 0
+        var score = if (keyScore > (finalData?.score ?: 0)) keyScore else finalData?.score ?: 0
 
         val numberOfStars = sharedViewModel.getStars().value!!
-        val stars = if (numberOfStars > (finalData?.numberOfStars ?: 0)) numberOfStars else finalData?.numberOfStars ?: 0
+        var stars = if (numberOfStars > (finalData?.numberOfStars ?: 0)) numberOfStars else finalData?.numberOfStars ?: 0
+
+        if (arguments?.getBoolean(KEY_TIME_OUT) != false) {
+            score = 0
+            stars = 0
+        }
 
         val allLevelsItem = AllLevelsItem(
             sharedViewModel.usernameData.value?.username!!,

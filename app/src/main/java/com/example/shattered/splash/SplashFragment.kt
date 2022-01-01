@@ -1,6 +1,8 @@
 package com.example.shattered.splash
 
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +24,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        displayMetrics()
         findNavController().navigate(
             if (sharedViewModel.repository.auth.currentUser != null) R.id.action_splashFragment_to_levelsFragment
             else R.id.action_splashFragment_to_loginFragment
@@ -31,5 +34,15 @@ class SplashFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as MainActivity).fullScreen()
+    }
+
+    private fun displayMetrics() {
+        val displayMetrics = DisplayMetrics()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            displayMetrics.widthPixels = activity?.windowManager?.currentWindowMetrics?.bounds?.right ?: 0
+            displayMetrics.heightPixels = activity?.windowManager?.currentWindowMetrics?.bounds?.bottom ?: 0
+        }
+        else @Suppress("DEPRECATION") activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        sharedViewModel.setDisplayHeightAndWith(displayMetrics.heightPixels, displayMetrics.widthPixels)
     }
 }

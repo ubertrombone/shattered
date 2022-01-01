@@ -55,6 +55,19 @@ class ShatteredViewModel: ViewModel() {
         return false
     }
 
+    private var _displayWidth: Int = 0
+    val displayWidth: Int
+        get() = _displayWidth
+
+    private var _displayHeight: Int = 0
+    val displayHeight: Int
+        get() = _displayHeight
+
+    fun setDisplayHeightAndWith(height: Int, width: Int) {
+        _displayHeight = height
+        _displayWidth = width
+    }
+
     private var _replayLevelSwitch = false
     val replayLevelSwitch: Boolean
         get() = _replayLevelSwitch
@@ -66,7 +79,7 @@ class ShatteredViewModel: ViewModel() {
     // TODO: 15% Lives; 5% Timed; Neither
     // TODO: Remove this function after running a few times
     fun setupLevels() {
-        var levelCounter = 1
+        var levelCounter = 41
         var lives: Boolean
         var timer: Boolean
         val complexities = mutableMapOf("easy" to 5, "medium" to 8, "hard" to 5, "expert" to 2)

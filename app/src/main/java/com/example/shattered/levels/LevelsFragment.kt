@@ -21,6 +21,11 @@ class LevelsFragment : Fragment(), View.OnClickListener {
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private lateinit var googleSignInClient: GoogleSignInClient
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //sharedViewModel.setupLevels()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val fragmentBinding = FragmentLevelsBinding.inflate(inflater, container, false)
         binding = fragmentBinding

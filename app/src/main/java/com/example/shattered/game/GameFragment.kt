@@ -2,10 +2,8 @@ package com.example.shattered.game
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.AnimationDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.DisplayMetrics
 import android.view.*
 import android.view.ViewGroup.*
 import android.widget.ImageView
@@ -26,7 +24,8 @@ import com.skydoves.balloon.*
 import kotlin.math.roundToInt
 
 //TODO: on easier levels randomly select a cell in each row and reveal the image beneath
-//TODO: Add a countdown clock, make it like the lives counter. Test it.
+//TODO: On easier levels, a left or right arrow will be kept and cells on the opposite side will be unclickable going forward
+//TODO: Make level 1 a different fragment that uses balloons for tutorial
 class GameFragment : Fragment() {
 
     private var binding: FragmentGameBinding? = null
@@ -55,7 +54,6 @@ class GameFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        (activity as MainActivity).fullScreen()
         binding?.boardLay?.removeAllViews()
 
         //TODO: Clean this mess up
@@ -69,10 +67,10 @@ class GameFragment : Fragment() {
         if (binding?.timer?.isVisible == true) {
             binding?.timer?.base = SystemClock.elapsedRealtime() + sharedViewModel.getTimer()
             binding?.timer?.start()
-            //TODO: Make this call finalMessage at 0
             binding?.timer?.setOnChronometerTickListener { if (it.base <= SystemClock.elapsedRealtime()) {
                 it.stop()
-                println("FINAL MESSAGE FRAGMENT WILL BE CALLED HERE")
+                FinalMessageFragment.newInstance(sharedViewModel.level.toString(), 0L, true)
+                    .show(childFragmentManager, FinalMessageFragment.TAG)
             } }
         }
 
@@ -92,7 +90,10 @@ class GameFragment : Fragment() {
             setBalloonAnimation(BalloonAnimation.ELASTIC)
             setLifecycleOwner(viewLifecycleOwner)
             setOnBalloonClickListener { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
-            setOnBalloonDismissListener { Toast.makeText(context, "dismissed", Toast.LENGTH_SHORT).show() }
+            setOnBalloonDismissListener {
+                Toast.makeText(context, "dismissed", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).fullScreen()
+            }
             build()
         }
 
@@ -109,6 +110,11 @@ class GameFragment : Fragment() {
         observeScore()
         observeLives()
         observeStars()
+        (activity as MainActivity).fullScreen()
+    }
+
+    override fun onMultiWindowModeChanged(isInMultiWindowMode: Boolean) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode)
         (activity as MainActivity).fullScreen()
     }
 
@@ -189,7 +195,7 @@ class GameFragment : Fragment() {
                     if (rowNumber == sharedViewModel.getHeight() - 1 && cell == "1") {
                         if (binding?.timer?.isVisible == true) binding?.timer?.stop()
                         FinalMessageFragment.newInstance(sharedViewModel.level.toString(),
-                            sharedViewModel.getScore().value!!.roundToInt().toLong())
+                            sharedViewModel.getScore().value!!.roundToInt().toLong(), false)
                             .show(childFragmentManager, FinalMessageFragment.TAG)
                     }
                 }
@@ -206,14 +212,8 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun displayMetrics(): Int {
-        val displayMetrics = DisplayMetrics()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) activity?.display?.getRealMetrics(displayMetrics)
-        else @Suppress("DEPRECATION") activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
-
-        return ((displayMetrics.widthPixels - (displayMetrics.widthPixels * .05)) /
-                (sharedViewModel.getWidth() + 2)).roundToInt()
-    }
+    private fun displayMetrics() = ((sharedViewModel.displayWidth - (sharedViewModel.displayWidth * .05)) /
+            (sharedViewModel.getWidth() + 2)).roundToInt()
 
     private fun enableDisableRows(row: Int = 0) {
         var rowCounter = 0
@@ -342,7 +342,9 @@ class GameFragment : Fragment() {
     fun navigateToMain() = findNavController().navigate(R.id.action_gameFragment_to_levelsFragment)
 
     fun backButton() {
-        binding?.goBack?.visibility = View.VISIBLE
+        hideBackButton(true)
         binding?.goBack?.setOnClickListener { navigateToMain() }
     }
+
+    fun hideBackButton(visibility: Boolean) { binding?.goBack?.visibility = if (visibility) View.VISIBLE else View.GONE }
 }

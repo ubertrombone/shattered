@@ -14,7 +14,6 @@ import com.example.shattered.R
 import com.example.shattered.databinding.FragmentLoginBinding
 import com.example.shattered.model.CurrentLevelItem
 import com.example.shattered.model.ShatteredViewModel
-import com.example.shattered.username.UsernameFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

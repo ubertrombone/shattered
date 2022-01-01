@@ -3,9 +3,7 @@ package com.example.shattered.leaderboards
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build.*
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -80,13 +78,10 @@ class LeaderboardFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val displayMetrics = DisplayMetrics()
-        if (VERSION.SDK_INT >= VERSION_CODES.R) activity?.display?.getRealMetrics(displayMetrics)
-        else @Suppress("DEPRECATION") activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
 
         dialog?.window?.setLayout(
-            displayMetrics.widthPixels - (displayMetrics.widthPixels * .1).toInt(),
-            displayMetrics.heightPixels - (displayMetrics.heightPixels * .2).toInt()
+            sharedViewModel.displayWidth - (sharedViewModel.displayWidth * .1).toInt(),
+            sharedViewModel.displayHeight - (sharedViewModel.displayHeight * .2).toInt()
         )
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
