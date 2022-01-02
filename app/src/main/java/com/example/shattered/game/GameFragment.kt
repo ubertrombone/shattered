@@ -80,7 +80,8 @@ class GameFragment : Fragment() {
             setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
             setArrowSize(10)
             setArrowPosition(0.5f)
-            setWidthRatio(0.45f)
+            setWidth(BalloonSizeSpec.WRAP)
+            setHeight(BalloonSizeSpec.WRAP)
             setCornerRadius(16f)
             setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
             setBalloonAnimation(BalloonAnimation.ELASTIC)
@@ -172,6 +173,15 @@ class GameFragment : Fragment() {
                 val cardId = sharedViewModel.getWidth() * i + j
                 val cardImage = setImage(R.drawable.game_piece_red_blue)
                 val cardView = setupCardView(cardId, params, cardImage)
+
+                if (sharedViewModel.level == 1) {
+                    when (listOf(i, j)) {
+                        listOf(1, 2) -> cardView.addView(setImage(R.drawable.game_piece_black))
+                        listOf(2, 4) -> cardView.addView(setImage(R.drawable.game_piece_blue))
+                        listOf(4, 0) -> setAnimationDrawable(cardView, R.drawable.deathnotered_infinite)
+                    }
+                }
+
                 cardView.setOnClickListener {
                     val cardCoords = sharedViewModel.convertIdToCoords(cardView.id)
                     val rowNumber = cardCoords[1]
@@ -213,9 +223,16 @@ class GameFragment : Fragment() {
             indicatorVisibility(rowCounter, row)
 
             i.forEach { _ ->
-                val card = requireView().findViewById<CardView>(sharedViewModel.getWidth() * rowCounter + columnCounter)
+                val cardId = sharedViewModel.getWidth() * rowCounter + columnCounter
+                val card = requireView().findViewById<CardView>(cardId)
                 card.isClickable = rowCounter == row
                 card.alpha = if (rowCounter == row) 1F else .75F
+
+                val tutorialList = sharedViewModel.getTutorialList()
+                if (sharedViewModel.level == 1 && tutorialList.contains(sharedViewModel.convertIdToCoords(cardId))) {
+                    card.isClickable = false
+                    card.alpha = 1F
+                }
                 columnCounter ++
             }
             rowCounter ++
@@ -225,7 +242,11 @@ class GameFragment : Fragment() {
     private fun resetRowPieces(rowCoords: Int = 0, offset: Int = 0) {
         var columnCounter = 0
         sharedViewModel.getBoard()[rowCoords + offset].forEach { _ ->
-            setGamePiece(sharedViewModel.getWidth() * (rowCoords + offset) + columnCounter)
+            val cardId = sharedViewModel.getWidth() * (rowCoords + offset) + columnCounter
+            val tutorialList = sharedViewModel.getTutorialList()
+            if (sharedViewModel.level == 1 && tutorialList.contains(sharedViewModel.convertIdToCoords(cardId)))
+                return@forEach
+            setGamePiece(cardId)
             columnCounter ++
         }
     }
@@ -286,9 +307,9 @@ class GameFragment : Fragment() {
     }
 
     private fun oneSelected(coordinate: Int) {
-        enableDisableRows(row = coordinate + 1)
+        enableDisableRows(row = if (sharedViewModel.level == 1 && coordinate == 0) 2 else coordinate + 1)
         if (coordinate == sharedViewModel.getHeight() - 1) sharedViewModel.setTimeOut(SystemClock.elapsedRealtime())
-        else resetRowPieces(rowCoords = coordinate, offset = 1)
+        else resetRowPieces(rowCoords = coordinate, offset = if (sharedViewModel.level == 1 && coordinate == 0) 2 else 1)
     }
 
     private fun twoSelected(coordinate: Int) {
@@ -322,13 +343,6 @@ class GameFragment : Fragment() {
         sharedViewModel.getHeightAndWidth(sharedViewModel.getHeight(), sharedViewModel.getWidth())
         perfectScore = sharedViewModel.perfectScore()
     }
-
-//    private fun getParams(size: Int) = when {
-//        size <= 10 -> 100
-//        size <= 13 -> 76
-//        size <= 14 -> 70
-//        else -> 62
-//    }
 
     fun navigateToMain() = findNavController().navigate(R.id.action_gameFragment_to_levelsFragment)
 

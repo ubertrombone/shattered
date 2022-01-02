@@ -51,7 +51,7 @@ class Scoring {
     fun setTimeOut(time: Long) { _timeOut = time }
     private fun getTimeDiff(timeNext: Long) = TimeUnit.MILLISECONDS.toSeconds(timeNext - _timeIn)
 
-    fun scoring(cell: String, rowNumber: Int) {
+    fun scoring(cell: String, rowNumber: Int, level: Int) {
         onesMultiplier(cell, rowNumber)
         movesInc()
         timeMultiplier(cell)
@@ -62,7 +62,8 @@ class Scoring {
         val newPoints = (moveScore() * _timeMultiplier * moveOnesMultiplier) + timeBonus() +
                 (correctAnswerBonus(rowNumber) * _consecutiveUniqueOnes)
         val penalty = penalty(cell, _score.value?.plus(newPoints)!!)
-        changeScore(newPoints - penalty)
+        val levelOneBonus = if (level == 1) levelOneBonus() else 0.0
+        changeScore(newPoints - penalty + levelOneBonus)
         if (cell == "1" && rowNumber == _rowNumber) _rowNumber ++
     }
 
@@ -99,6 +100,11 @@ class Scoring {
             timeDiff <= _height * 7 -> _height * 25.0
             else -> _height * 10.0
         }
+    }
+
+    private fun levelOneBonus(): Double {
+        if (_timeOut == 0L) return  0.0
+        return 7000.0
     }
 
     private fun correctAnswerBonus(rowNumber: Int) = if (rowNumber == _rowNumber) _height * 100.0 else 0.0

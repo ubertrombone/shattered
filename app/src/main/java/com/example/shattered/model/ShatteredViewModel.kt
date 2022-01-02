@@ -121,6 +121,7 @@ class ShatteredViewModel: ViewModel() {
     fun getBoard() = _gameBoard.board
     fun getLives() = _gameBoard.lives
     fun getTimer() = _gameBoard.timer
+    fun getTutorialList() = _gameBoard.tutorialsList
     fun removeLives(amount: Int) = _gameBoard.removeLives(amount)
     fun createBoard(level: Int) = _gameBoard.setupBoard(level)
     fun convertIdToCoords(id: Int) = _gameBoard.convertCardIDToCoords(id)
@@ -136,7 +137,7 @@ class ShatteredViewModel: ViewModel() {
     fun setTimeIn(time: Long) = _score.setTimeIn(time)
     fun setTimeOnClick(time: Long) = _score.setTimeOnClick(time)
     fun setTimeOut(time: Long) = _score.setTimeOut(time)
-    fun scoring(cell: String, rowNumber: Int) = _score.scoring(cell, rowNumber)
+    fun scoring(cell: String, rowNumber: Int) = _score.scoring(cell, rowNumber, _level)
     fun getHeightAndWidth(height: Int, width: Int) = _score.getGameHeightAndWidth(height, width)
     fun perfectScore() = _score.calculatePerfectScore()
 

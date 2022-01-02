@@ -27,11 +27,22 @@ open class GameBoard {
     val board: Array<Array<String>>
         get() = _board
 
+    val tutorialsList = listOf(listOf(2, 1), listOf(4, 2), listOf(0, 4))
     fun setupBoard(level: Int) {
         adjustHeightWidth(level)
         setLives(level)
         setTimer(level)
         _board = createBoard(level)
+        if (level == 1) {
+            _board[1] = arrayOf("0", "0", "1", "0", "0")
+            if (_board[2][4] == "1") _board[2][1] = "1"
+            _board[2].forEach { cellValue ->
+                if (cellValue == "2") _board[2][_board[2].indexOf(cellValue)] = "0"
+            }
+            _board[2][4] = "2"
+            if (_board[4][0] == "1") _board[4][1] = "1"
+            _board[4][0] = "3"
+        }
         _board.forEach { i ->
             println(i.contentToString())
         }
