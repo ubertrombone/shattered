@@ -67,7 +67,6 @@ class FinalMessageFragment : DialogFragment() {
             binding?.tryAgain?.visibility = View.VISIBLE
         }
 
-        //TODO: add argument? that takes a Boolean that says if the game was timed out, if true 0 stars and a score of 0
         sendResultsToDatabase()
         setupView()
         setStars()

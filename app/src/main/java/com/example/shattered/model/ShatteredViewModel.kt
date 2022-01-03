@@ -74,10 +74,6 @@ class ShatteredViewModel: ViewModel() {
 
     fun switchReplayLevel(switch: Boolean) { _replayLevelSwitch = switch }
 
-    // TODO: run some functions that randomly select each level type going 20 deep at a time
-    // TODO: 5 Easy in 20 set (shows some cells at start and doesn't clear each row); 8 Medium (shows some cells at start); 5 Hard (Show very few cells); 2 expert (no hints, lives and/or timer guaranteed)
-    // TODO: 15% Lives; 5% Timed; Neither
-    // TODO: Remove this function after running a few times
     fun setupLevels() {
         var levelCounter = 41
         var lives: Boolean

@@ -9,9 +9,7 @@ import android.view.ViewGroup.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -26,12 +24,12 @@ import kotlin.math.roundToInt
 
 //TODO: on easier levels randomly select a cell in each row and reveal the image beneath
 //TODO: On easier levels, a left or right arrow will be kept and cells on the opposite side will be unclickable going forward
-//TODO: Make level 1 a different fragment that uses balloons for tutorial
 class GameFragment : Fragment() {
 
     private var binding: FragmentGameBinding? = null
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private var perfectScore: Int? = null
+    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerBalloon(requireContext(), this, requireActivity()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,27 +72,6 @@ class GameFragment : Fragment() {
                     .show(childFragmentManager, FinalMessageFragment.TAG)
             } }
         }
-        val balloon = createBalloon(requireContext()) {
-            setLayout(R.layout.correct_answer_tutorial)
-            setArrowOrientation(ArrowOrientation.TOP)
-            setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-            setArrowSize(10)
-            setArrowPosition(0.5f)
-            setWidth(BalloonSizeSpec.WRAP)
-            setHeight(BalloonSizeSpec.WRAP)
-            setCornerRadius(16f)
-            setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
-            setBalloonAnimation(BalloonAnimation.ELASTIC)
-            setLifecycleOwner(viewLifecycleOwner)
-            setOnBalloonClickListener { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
-            setOnBalloonDismissListener {
-                Toast.makeText(context, "dismissed", Toast.LENGTH_SHORT).show()
-                (activity as MainActivity).fullScreen()
-            }
-            build()
-        }
-
-        binding?.helpButton?.showAlignBottom(balloon)
 
         if (sharedViewModel.level == 1)
             HelpFragment.newInstance(false).show(childFragmentManager, HelpFragment.TAG)
@@ -107,6 +84,13 @@ class GameFragment : Fragment() {
         observeScore()
         observeLives()
         observeStars()
+
+        if (sharedViewModel.level == 1) {
+            val correctId = 7
+            val correctAnswer = requireView().findViewById<CardView>(correctId)
+            correctAnswer.showAlignBottom(correctAnswerBalloon)
+        }
+
         (activity as MainActivity).fullScreen()
     }
 
