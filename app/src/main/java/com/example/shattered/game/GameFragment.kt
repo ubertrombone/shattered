@@ -29,10 +29,10 @@ class GameFragment : Fragment() {
     private var binding: FragmentGameBinding? = null
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private var perfectScore: Int? = null
-    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), this, R.layout.correct_answer_tutorial) }
-    private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), this) }
-    private val returnARowBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), this, R.layout.return_a_row_tutorial) }
-    private val deathBalloon by lazy { BalloonUtils.getDeathBalloon(requireContext(), this, requireActivity()) }
+    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), viewLifecycleOwner, R.layout.correct_answer_tutorial) }
+    private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), viewLifecycleOwner) }
+    private val returnARowBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), viewLifecycleOwner, R.layout.return_a_row_tutorial) }
+    private val deathBalloon by lazy { BalloonUtils.getDeathBalloon(requireContext(), viewLifecycleOwner, requireActivity()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

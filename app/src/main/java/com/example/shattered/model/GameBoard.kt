@@ -49,6 +49,9 @@ open class GameBoard {
     }
 
     //TODO: Experiment with checkpoints and not making info always disappear
+
+    //TODO: EASY: rows don't clear ever; some visible pieces on start; selecting a correct answer narrows the clickable cells in a row.
+    //TODO: MEDIUM: some visible pieces on start (more than in Easy)
     private fun adjustHeightWidth(level: Int) {
         if (level <= 5) {
             _width = 5

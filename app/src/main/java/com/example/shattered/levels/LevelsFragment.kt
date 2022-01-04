@@ -3,6 +3,7 @@ package com.example.shattered.levels
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -91,6 +92,9 @@ class LevelsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setupFabButtons() {
+        binding?.fabMenuActions?.setImageResource(
+            if (binding?.levelsFab?.isVisible == true) R.drawable.teal_circle_with_plus else R.drawable.teal_circle_with_x)
+
         if (binding?.levelsFab?.visibility == View.VISIBLE) {
             binding?.recordsFab?.visibility = View.GONE
             binding?.recordsFabText?.visibility = View.GONE

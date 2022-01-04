@@ -72,6 +72,7 @@
             android:src="@drawable/teal_circle_with_plus"
             android:backgroundTintMode="src_atop"
             android:backgroundTint="@android:color/holo_red_light"
+            android:animateLayoutChanges="true"
             app:fabCustomSize="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

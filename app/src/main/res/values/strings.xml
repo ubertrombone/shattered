@@ -27,7 +27,7 @@
     <string name="left_pointing_game_piece">Left pointing game piece</string>
     <string name="right_pointing_game_piece">Right pointing game piece</string>
     <string name="go_back_a_row_or_not">Go back a row… or not</string>
-    <string name="back_to_go_it_s_like_dying">Back to go… It\'s like dying</string>
+    <string name="back_to_go_it_s_like_dying">Back to the start… It\'s like dying</string>
     <string name="answer_to_the_right">Answer - right</string>
     <string name="answer_to_the_left">Answer - left</string>
     <string name="go_to_next_level">Go to next level</string>
