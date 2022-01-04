@@ -33,4 +33,6 @@
     <string name="go_to_next_level">Go to next level</string>
     <string name="try_again">Try again</string>
     <string name="answer_right_left">Answer - right/left</string>
+    <string name="answer_to_left_go_back_a_row_probably">Answer to left, go back a row probably</string>
+    <string name="answer_to_right_go_back_a_row_probably">Answer to right, go back a row probably</string>
 </resources>

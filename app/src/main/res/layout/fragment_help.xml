@@ -85,13 +85,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/game_piece_blue"
-                        android:contentDescription="@string/left_pointing_game_piece" />
+                        android:contentDescription="@string/answer_to_left_go_back_a_row_probably" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/game_piece_red"
-                        android:contentDescription="@string/right_pointing_game_piece" />
+                        android:contentDescription="@string/answer_to_right_go_back_a_row_probably" />
 
                 </LinearLayout>
 
@@ -122,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/deathnoteblue_infinite"
-                        android:contentDescription="@string/correct_answer"/>
+                        android:contentDescription="@string/back_to_go_it_s_like_dying"/>
 
                 <TextView
                         android:layout_width="0dp"

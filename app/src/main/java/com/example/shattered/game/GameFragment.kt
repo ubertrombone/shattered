@@ -16,6 +16,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.shattered.MainActivity
 import com.example.shattered.R
+import com.example.shattered.databinding.DeathTutorialBinding
 import com.example.shattered.databinding.FragmentGameBinding
 import com.example.shattered.finalmessage.FinalMessageFragment
 import com.example.shattered.model.ShatteredViewModel
@@ -27,10 +28,13 @@ import kotlin.math.roundToInt
 class GameFragment : Fragment() {
 
     private var binding: FragmentGameBinding? = null
+    private var deathBinding: DeathTutorialBinding? = null
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private var perfectScore: Int? = null
-    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerBalloon(requireContext(), this, requireActivity()) }
-    private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), this, requireActivity()) }
+    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerBalloon(requireContext(), this) }
+    private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), this) }
+    private val returnARowBalloon by lazy { BalloonUtils.getReturnARowBalloon(requireContext(), this) }
+    private val deathBalloon by lazy { BalloonUtils.getDeathBalloon(requireContext(), this, requireActivity()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,10 @@ class GameFragment : Fragment() {
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             gameFragment = this@GameFragment
+        }
+        deathBinding?.apply {
+            lifecycleOwner = viewLifecycleOwner
+            deathLayout = this@GameFragment
         }
     }
 
@@ -87,9 +95,13 @@ class GameFragment : Fragment() {
             val correctAnswer = requireView().findViewById<CardView>(correctId)
             val leftRightId = 14
             val leftRight = requireView().findViewById<CardView>(leftRightId)
+            val deathId = 20
+            val deathAnswer = requireView().findViewById<CardView>(deathId)
 
             correctAnswerBalloon
                 .relayShowAlignLeft(leftRightBalloon, leftRight)
+                .relayShowAlignBottom(returnARowBalloon, leftRight)
+                .relayShowAlignRight(deathBalloon, deathAnswer)
 
             correctAnswer.showAlignBottom(correctAnswerBalloon)
         } else startTime()
