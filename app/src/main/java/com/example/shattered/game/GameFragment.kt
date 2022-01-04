@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.shattered.MainActivity
 import com.example.shattered.R
-import com.example.shattered.databinding.DeathTutorialBinding
 import com.example.shattered.databinding.FragmentGameBinding
 import com.example.shattered.finalmessage.FinalMessageFragment
 import com.example.shattered.model.ShatteredViewModel
@@ -28,12 +27,11 @@ import kotlin.math.roundToInt
 class GameFragment : Fragment() {
 
     private var binding: FragmentGameBinding? = null
-    private var deathBinding: DeathTutorialBinding? = null
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private var perfectScore: Int? = null
-    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerBalloon(requireContext(), this) }
+    private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), this, R.layout.correct_answer_tutorial) }
     private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), this) }
-    private val returnARowBalloon by lazy { BalloonUtils.getReturnARowBalloon(requireContext(), this) }
+    private val returnARowBalloon by lazy { BalloonUtils.getCorrectAnswerAndReturnRowBalloons(requireContext(), this, R.layout.return_a_row_tutorial) }
     private val deathBalloon by lazy { BalloonUtils.getDeathBalloon(requireContext(), this, requireActivity()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +51,6 @@ class GameFragment : Fragment() {
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             gameFragment = this@GameFragment
-        }
-        deathBinding?.apply {
-            lifecycleOwner = viewLifecycleOwner
-            deathLayout = this@GameFragment
         }
     }
 
@@ -147,7 +141,7 @@ class GameFragment : Fragment() {
         binding?.thirdStarGame?.setImageResource(third)
     }
 
-    fun startTime() = sharedViewModel.setTimeIn(SystemClock.elapsedRealtime())
+    private fun startTime() = sharedViewModel.setTimeIn(SystemClock.elapsedRealtime())
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setupBoard() {
