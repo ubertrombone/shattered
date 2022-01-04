@@ -10,6 +10,7 @@
     <color name="very_dark_gray">#43464B</color>
     <color name="very_very_dark_gray">#4b4b50</color>
     <color name="red">#80FF0000</color>
+    <color name="light_red">#50FF0000</color>
     <color name="yellow">#FFFFDF00</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

@@ -37,4 +37,30 @@ object BalloonUtils {
         }
     }
 
+    fun getLeftRightBalloon(
+        context: Context,
+        lifecycleOwner: LifecycleOwner,
+        activity: Activity
+    ): Balloon {
+        return createBalloon(context) {
+            setLayout(R.layout.left_right_tutorial)
+            setArrowOrientation(ArrowOrientation.RIGHT)
+            setArrowPositionRules(ArrowPositionRules.ALIGN_BALLOON)
+            setArrowSize(15)
+            setArrowPosition(0.5f)
+            setWidth(BalloonSizeSpec.WRAP)
+            setHeight(BalloonSizeSpec.WRAP)
+            setCornerRadius(16f)
+            setBackgroundColor(ContextCompat.getColor(context, R.color.light_red))
+            setBalloonAnimation(BalloonAnimation.ELASTIC)
+            setLifecycleOwner(lifecycleOwner)
+            setOnBalloonClickListener { Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show() }
+            setOnBalloonDismissListener {
+                Toast.makeText(context, "dismissed", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).fullScreen()
+            }
+            build()
+        }
+    }
+
 }

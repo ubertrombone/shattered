@@ -30,6 +30,7 @@ class GameFragment : Fragment() {
     private val sharedViewModel: ShatteredViewModel by activityViewModels()
     private var perfectScore: Int? = null
     private val correctAnswerBalloon by lazy { BalloonUtils.getCorrectAnswerBalloon(requireContext(), this, requireActivity()) }
+    private val leftRightBalloon by lazy { BalloonUtils.getLeftRightBalloon(requireContext(), this, requireActivity()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ class GameFragment : Fragment() {
         binding?.lives?.text = sharedViewModel.getLives().value.toString()
         binding?.scoreValueInGame?.text = sharedViewModel.getMoves().toString()
         binding?.scoreScore?.visibility = if (sharedViewModel.level >= 6) View.GONE else View.VISIBLE
-        binding?.helpButton?.setOnClickListener { HelpFragment.newInstance(true)
+        binding?.helpButton?.setOnClickListener { HelpFragment.newInstance()
             .show(childFragmentManager, HelpFragment.TAG) }
         binding?.timer?.visibility = if (sharedViewModel.getTimer() == 0L) View.GONE else View.VISIBLE
         if (binding?.timer?.isVisible == true) {
@@ -73,10 +74,6 @@ class GameFragment : Fragment() {
             } }
         }
 
-        if (sharedViewModel.level == 1)
-            HelpFragment.newInstance(false).show(childFragmentManager, HelpFragment.TAG)
-        else startTime()
-
         sharedViewModel.fetchOneLevel(sharedViewModel.level.toString())
 
         setupBoard()
@@ -88,8 +85,14 @@ class GameFragment : Fragment() {
         if (sharedViewModel.level == 1) {
             val correctId = 7
             val correctAnswer = requireView().findViewById<CardView>(correctId)
+            val leftRightId = 14
+            val leftRight = requireView().findViewById<CardView>(leftRightId)
+
+            correctAnswerBalloon
+                .relayShowAlignLeft(leftRightBalloon, leftRight)
+
             correctAnswer.showAlignBottom(correctAnswerBalloon)
-        }
+        } else startTime()
 
         (activity as MainActivity).fullScreen()
     }

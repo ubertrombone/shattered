@@ -159,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/forward_arrow_blue"
-                        android:contentDescription="@string/correct_answer"/>
+                        android:contentDescription="@string/right_pointing_game_piece"/>
 
                 <TextView
                         android:layout_width="0dp"
@@ -187,7 +187,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/backward_arrow_red"
-                        android:contentDescription="@string/correct_answer"/>
+                        android:contentDescription="@string/left_pointing_game_piece"/>
 
                 <TextView
                         android:layout_width="wrap_content"
@@ -209,15 +209,6 @@
                 app:srcCompat="@drawable/red_circle_with_x"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-                android:id="@+id/read_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/play_this_level"
-                app:srcCompat="@drawable/red_circle_with_forward_arrow"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
