@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.lang.NullPointerException
 
@@ -18,6 +19,7 @@ class ShatteredRepository {
     val database = Firebase.database
     val usernameReference = database.getReference("usernames")
     val currentLevelReference = database.getReference("currentLevels")
+    val levelMetaReference = database.getReference("levels")
     private val allLevelsReference = database.reference
 
     fun fetchUsername(liveData: MutableLiveData<UsernameItem>) {
@@ -101,6 +103,17 @@ class ShatteredRepository {
                         dataSnapshot.getValue(AllLevelsItem::class.java)!!
                     }
                     liveData.postValue(allPlayersOnLevel.reversed())
+                }
+                override fun onCancelled(error: DatabaseError) = println("Fail")
+            })
+    }
+
+    fun fetchLevelMeta(liveData: MutableLiveData<LevelMeta>, level: String) {
+        levelMetaReference
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val levelMetaData: LevelMeta = snapshot.child(level).getValue(LevelMeta::class.java) ?: LevelMeta()
+                    liveData.postValue(levelMetaData)
                 }
                 override fun onCancelled(error: DatabaseError) = println("Fail")
             })

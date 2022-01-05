@@ -66,6 +66,9 @@ class LeaderboardFragment : DialogFragment() {
             leaderboardFragment = this@LeaderboardFragment
         }
 
+        sharedViewModel.fetchLevelMetaData(arguments?.getString(KEY_TITLE)!!)
+        levelMetaObserver()
+
         setupView()
         recyclerView = binding?.leaderboardRecyclerView!!
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -105,6 +108,8 @@ class LeaderboardFragment : DialogFragment() {
     private fun observeViewModel() {
         sharedViewModel.listOfAllPlayersOnLevelData.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
+
+    private fun levelMetaObserver() { sharedViewModel.levelMetaData.observe(viewLifecycleOwner) { println(it) } }
 
     private fun clickListeners() {
         binding?.closePop?.setOnClickListener { dismiss() }

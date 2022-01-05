@@ -67,6 +67,9 @@ class FinalMessageFragment : DialogFragment() {
             binding?.tryAgain?.visibility = View.VISIBLE
         }
 
+        sharedViewModel.fetchLevelMetaData((arguments?.getString(KEY_TITLE)!!.toInt() + 1).toString())
+        levelMetaObserver()
+
         sendResultsToDatabase()
         setupView()
         setStars()
@@ -88,6 +91,8 @@ class FinalMessageFragment : DialogFragment() {
         super.onResume()
         (activity as MainActivity).fullScreen()
     }
+
+    private fun levelMetaObserver() { sharedViewModel.levelMetaData.observe(viewLifecycleOwner) { println(it) } }
 
     private fun setupView() {
         binding?.levelHeaderFinal?.text = getString(R.string.level, arguments?.getString(KEY_TITLE))

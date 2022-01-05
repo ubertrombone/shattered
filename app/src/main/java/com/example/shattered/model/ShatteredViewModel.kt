@@ -36,12 +36,17 @@ class ShatteredViewModel: ViewModel() {
     val finalCurrentLevelData: LiveData<AllLevelsItem>
         get() = _finalCurrentLevelData
 
+    private val _levelMetaData = MutableLiveData<LevelMeta>()
+    val levelMetaData: LiveData<LevelMeta>
+        get() = _levelMetaData
+
     fun fetchUsername() { _repository.fetchUsername(_usernameData) }
     fun fetchCurrentLevel() { _repository.fetchCurrentLevel(_currentLevelData) }
     fun fetchAllUsernames() { _repository.fetchAllUsernames(_listOfAllUsernamesData) }
     fun fetchAllLevels() { _repository.fetchAllLevels(_listOfAllLevelsData) }
     fun fetchOneLevel(reference: String) { _repository.fetchOneLevel(_finalCurrentLevelData, reference) }
     fun fetchAllPlayersOnLevel(level: String) { _repository.fetchAllPlayersOnLevel(_listOfAllPlayersOnLevelData, level) }
+    fun fetchLevelMetaData(level: String) { _repository.fetchLevelMeta(_levelMetaData, level) }
     fun updateDatabase(value: Any, databaseReference: DatabaseReference) { _repository.updateDatabase(value, databaseReference) }
     fun getLevelReference(reference: String): DatabaseReference = _repository.getLevelReference(reference)
 

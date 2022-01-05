@@ -64,11 +64,15 @@ class LevelsFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun levelMetaObserver() { sharedViewModel.levelMetaData.observe(viewLifecycleOwner) { println(it) } }
+
     private fun currentLevelObserver() {
         sharedViewModel.currentLevelData.observe(viewLifecycleOwner) {
             val level = it.currentLevel
             binding?.level?.text = level.toString()
             sharedViewModel.setLevel(level ?: 0)
+            sharedViewModel.fetchLevelMetaData(level.toString())
+            levelMetaObserver()
             binding?.centralImage?.setOnClickListener {
                 findNavController().navigate(R.id.action_levelsFragment_to_gameFragment)
             }
